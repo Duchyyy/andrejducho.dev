@@ -1,4 +1,4 @@
-package com.duchyyy.springboot.models;
+package com.duchyyy.springboot.model;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -49,5 +49,15 @@ public class Article {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", createdDate=" + createdDate +
+                ", content='" + content + '\'' +
+                '}';
     }
 }

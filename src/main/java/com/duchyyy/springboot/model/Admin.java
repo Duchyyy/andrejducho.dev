@@ -1,4 +1,4 @@
-package com.duchyyy.springboot.models;
+package com.duchyyy.springboot.model;
 
 
 import javax.persistence.*;
@@ -59,5 +59,16 @@ public class Admin {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
