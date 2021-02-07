@@ -1,12 +1,16 @@
 package com.duchyyy.springboot.model;
 
+
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -17,6 +21,18 @@ public class Admin {
     private String email;
     private String password;
 
+    @OneToOne(mappedBy = "admin", fetch = FetchType.EAGER)
+    private Profile profile;
+
+    @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY)
+    private Set<Article> articles = new HashSet<>();
+
+    @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY)
+    private Set<Project> projects = new HashSet<>();
+
+    @OneToMany(mappedBy = "admin", fetch = FetchType.EAGER)
+    private Set<BioEvent> bioEvents = new HashSet<>();
+
     public Admin() {
     }
 
@@ -24,7 +40,7 @@ public class Admin {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -60,6 +76,38 @@ public class Admin {
         this.password = password;
     }
 
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
+    public Set<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(Set<Article> articles) {
+        this.articles = articles;
+    }
+
+    public Set<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
+    }
+
+    public Set<BioEvent> getBioEvents() {
+        return bioEvents;
+    }
+
+    public void setBioEvents(Set<BioEvent> bioEvents) {
+        this.bioEvents = bioEvents;
+    }
+
     @Override
     public String toString() {
         return "Admin{" +
@@ -68,6 +116,9 @@ public class Admin {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", articles=" + articles +
+                ", projects=" + projects +
+                ", bioEvents=" + bioEvents +
                 '}';
     }
 }

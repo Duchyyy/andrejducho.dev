@@ -7,11 +7,15 @@ import javax.persistence.*;
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String title;
     private String description;
     private String link;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_projects_admin"))
+    private Admin admin;
 
     public Project() {
     }
@@ -20,7 +24,7 @@ public class Project {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -48,6 +52,14 @@ public class Project {
         this.link = link;
     }
 
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
     @Override
     public String toString() {
         return "Project{" +
@@ -55,6 +67,8 @@ public class Project {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", link='" + link + '\'' +
+                ", admin=" + admin +
                 '}';
     }
+
 }

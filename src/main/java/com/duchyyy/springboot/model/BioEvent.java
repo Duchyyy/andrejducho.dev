@@ -8,10 +8,14 @@ import java.util.Date;
 public class BioEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String event;
     private Date date;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_bio_events_admin"))
+    private Admin admin;
 
     public BioEvent() {
     }
@@ -20,7 +24,7 @@ public class BioEvent {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -40,12 +44,22 @@ public class BioEvent {
         this.date = date;
     }
 
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
     @Override
     public String toString() {
-        return "Biography{" +
+        return "BioEvent{" +
                 "id=" + id +
                 ", event='" + event + '\'' +
                 ", date=" + date +
+                ", admin=" + admin +
                 '}';
     }
+
 }

@@ -1,18 +1,19 @@
 package com.duchyyy.springboot.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String profile;
     private String technologies;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_profile_admin"))
+    private Admin admin;
 
     public Profile() {
     }
@@ -21,7 +22,7 @@ public class Profile {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -41,12 +42,22 @@ public class Profile {
         this.technologies = technologies;
     }
 
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
     @Override
     public String toString() {
         return "Profile{" +
                 "id=" + id +
                 ", profile='" + profile + '\'' +
                 ", technologies='" + technologies + '\'' +
+                ", admin=" + admin +
                 '}';
     }
+
 }
