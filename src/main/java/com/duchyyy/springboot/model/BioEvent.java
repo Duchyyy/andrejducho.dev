@@ -1,11 +1,12 @@
 package com.duchyyy.springboot.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "bio_events")
-public class BioEvent {
+public class BioEvent implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
