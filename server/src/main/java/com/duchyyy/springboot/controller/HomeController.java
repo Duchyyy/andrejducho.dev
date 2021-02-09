@@ -35,7 +35,7 @@ public class HomeController {
 //        return new ResponseEntity<>(bioEvents, HttpStatus.OK);
 //    }
 
-    @GetMapping
+    @GetMapping //(about)  a potom ina stranka kde bude projects a articles
     public ResponseEntity<HashMap> getMap() {
         return new ResponseEntity<>(getProfileAndBioEvents(), HttpStatus.OK);
     }
