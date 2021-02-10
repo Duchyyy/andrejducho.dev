@@ -1,5 +1,7 @@
 package com.duchyyy.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -14,6 +16,7 @@ public class Profile implements Serializable {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_profile_admin"))
+    @JsonBackReference
     private Admin admin;
 
     public Profile() {

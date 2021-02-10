@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/admin/bio-events")
+@RequestMapping("/admin/experience")
 public class BioEventController {
     private final BioEventService bioEventService;
 

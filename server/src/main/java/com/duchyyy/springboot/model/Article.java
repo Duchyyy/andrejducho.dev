@@ -1,5 +1,7 @@
 package com.duchyyy.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -22,6 +24,7 @@ public class Article implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_articles_admin"))
+    @JsonBackReference
     private Admin admin;
 
     @ManyToMany(fetch = FetchType.LAZY)

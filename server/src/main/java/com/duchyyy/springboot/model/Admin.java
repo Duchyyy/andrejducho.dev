@@ -2,6 +2,8 @@ package com.duchyyy.springboot.model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -23,15 +25,19 @@ public class Admin implements Serializable {
     private String password;
 
     @OneToOne(mappedBy = "admin", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private Profile profile;
 
     @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private Set<Article> articles = new HashSet<>();
 
     @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private Set<Project> projects = new HashSet<>();
 
     @OneToMany(mappedBy = "admin", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private Set<BioEvent> bioEvents = new HashSet<>();
 
     public Admin() {

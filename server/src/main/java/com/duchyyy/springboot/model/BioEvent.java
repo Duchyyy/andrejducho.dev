@@ -1,5 +1,7 @@
 package com.duchyyy.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -16,6 +18,7 @@ public class BioEvent implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_bio_events_admin"))
+    @JsonBackReference
     private Admin admin;
 
     public BioEvent() {
