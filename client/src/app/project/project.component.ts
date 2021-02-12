@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ProjectService } from './../service/project.service';
-import { Project } from './../model/project.model';
+import { ProjectService } from '../service/project.service';
+import { Project } from '../model/project.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

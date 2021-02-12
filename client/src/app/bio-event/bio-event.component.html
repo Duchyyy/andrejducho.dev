@@ -6,7 +6,7 @@
                     <ul class="timeline">
                         <div *ngFor= "let bioEvent of bioEvents">
                             <li class="event" data-date="">
-                                <h3>{{bioEvent.date.toString().substr(0,7)}}</h3>
+                                <h3>{{bioEvent.eventDate.toString().substr(0,7)}}</h3>
                                 <p>{{bioEvent.event}}</p>
                             </li>
                         </div>                                                     

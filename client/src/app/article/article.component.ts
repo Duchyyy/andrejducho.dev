@@ -1,3 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { ArticleService } from '../service/article.service';
+import { Article } from '../model/article.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +9,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./article.component.css']
 })
 export class ArticleComponent implements OnInit {
+  public articles: Article[] = [];
 
-  constructor() { }
+  constructor(private articleService: ArticleService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
+    this.getArticles();
+  }
+  public getArticles(): void {
+    this.articleService.getArticles().subscribe(
+      (response: Article[]) => {
+        this.articles = response;
+        console.log(this.articles);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );    
   }
 
 }

@@ -1,5 +1,5 @@
-import { BioEvent } from './../model/bio-event.model';
 import { BioEventService } from './../service/bio-event.service';
+import { BioEvent } from './../model/bio-event.model';
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 

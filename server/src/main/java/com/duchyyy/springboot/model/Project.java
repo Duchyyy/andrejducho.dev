@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "projects")
 public class Project implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,12 +13,14 @@ public class Project implements Serializable {
 
     private String title;
     private String description;
-    private String link;
+
+    @Column(name = "url_link")
+    private String urlLink;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_projects_admin"))
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_project_user"))
     @JsonBackReference
-    private Admin admin;
+    private User user;
 
     public Project() {
     }
@@ -48,20 +49,21 @@ public class Project implements Serializable {
         this.description = description;
     }
 
-    public String getLink() {
-        return link;
+
+    public String getUrlLink() {
+        return urlLink;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setUrlLink(String urlLink) {
+        this.urlLink = urlLink;
     }
 
-    public Admin getAdmin() {
-        return admin;
+    public User getUser() {
+        return user;
     }
 
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -70,9 +72,8 @@ public class Project implements Serializable {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", link='" + link + '\'' +
-                ", admin=" + admin +
+                ", urlLink='" + urlLink + '\'' +
+                ", user=" + user +
                 '}';
     }
-
 }

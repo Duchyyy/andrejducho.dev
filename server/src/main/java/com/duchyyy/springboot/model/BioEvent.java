@@ -7,24 +7,26 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "bio_events")
+@Table(name = "bio_event")
 public class BioEvent implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String event;
-    private Date date;
+
+    @Column(name = "event_date")
+    private Date eventDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_bio_events_admin"))
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_bio_event_user"))
     @JsonBackReference
-    private Admin admin;
+    private User user;
 
     public BioEvent() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -40,20 +42,20 @@ public class BioEvent implements Serializable {
         this.event = event;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getEventDate() {
+        return eventDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setEventDate(Date eventDate) {
+        this.eventDate = eventDate;
     }
 
-    public Admin getAdmin() {
-        return admin;
+    public User getUser() {
+        return user;
     }
 
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -61,9 +63,8 @@ public class BioEvent implements Serializable {
         return "BioEvent{" +
                 "id=" + id +
                 ", event='" + event + '\'' +
-                ", date=" + date +
-                ", admin=" + admin +
+                ", eventDate=" + eventDate +
+                ", user=" + user +
                 '}';
     }
-
 }

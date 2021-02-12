@@ -3,10 +3,12 @@ package com.duchyyy.springboot.service;
 import com.duchyyy.springboot.model.Profile;
 import com.duchyyy.springboot.repository.ProfileRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ProfileService {
     private final ProfileRepository profileRepository;
 

@@ -3,11 +3,13 @@ package com.duchyyy.springboot.service;
 import com.duchyyy.springboot.model.BioEvent;
 import com.duchyyy.springboot.repository.BioEventRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class BioEventService {
 
     private final BioEventRepository bioEventRepository;

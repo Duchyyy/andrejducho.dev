@@ -5,43 +5,43 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name = "articles")
 public class Article implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String title;
     private String description;
 
     @Column(name = "created_date")
-    private Date createdDate = new Date();
+    private Date createdDate;
 
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_articles_admin"))
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_article_user"))
     @JsonBackReference
-    private Admin admin;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "articles_has_tags",
-            joinColumns = { @JoinColumn(name = "articles_id") },
-            inverseJoinColumns = { @JoinColumn(name = "tag_id") })
-    private Set<Tag> tags = new HashSet<>();
+    private User user;
 
     public Article() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -67,31 +67,24 @@ public class Article implements Serializable {
     public void setContent(String content) {
         this.content = content;
     }
-    public Admin getAdmin() {
-        return admin;
-    }
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
+
+    public User getUser() {
+        return user;
     }
 
-    public Set<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
     public String toString() {
         return "Article{" +
                 "id=" + id +
+                ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", createdDate=" + createdDate +
                 ", content='" + content + '\'' +
-                ", admin=" + admin +
-                ", tags=" + tags +
+                ", user=" + user +
                 '}';
     }
-
 }

@@ -1,5 +1,4 @@
 import { LoginComponent } from './login/login.component';
-import { ArticleDetailComponent } from './article-detail/article-detail.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ArticleComponent } from './article/article.component';
 import { ProjectComponent } from './project/project.component';
@@ -14,8 +13,10 @@ const routes: Routes = [
   { path: 'experience', component: BioEventComponent },
   { path: 'projects', component: ProjectComponent },
   { path: 'articles', component: ArticleComponent },
-  { path: 'articles/:articleId', component: ArticleDetailComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'admin', redirectTo: 'login', pathMatch: 'full' },
+  //{ path: 'admin/**', redirectTo: 'login', pathMatch: 'full' },
+  //{ path: 'user-profile/:id', component: UserProfileComponent, canActivate: [AuthGuard] }
   { path: '**', component: PageNotFoundComponent }
 ];
 

@@ -15,9 +15,9 @@ public class Profile implements Serializable {
     private String technologies;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_profile_admin"))
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_profile_user"))
     @JsonBackReference
-    private Admin admin;
+    private User user;
 
     public Profile() {
     }
@@ -46,12 +46,12 @@ public class Profile implements Serializable {
         this.technologies = technologies;
     }
 
-    public Admin getAdmin() {
-        return admin;
+    public User getUser() {
+        return user;
     }
 
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class Profile implements Serializable {
                 "id=" + id +
                 ", profile='" + profile + '\'' +
                 ", technologies='" + technologies + '\'' +
-                ", admin=" + admin +
+                ", user=" + user +
                 '}';
     }
 

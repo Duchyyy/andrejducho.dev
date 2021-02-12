@@ -1,1 +1,38 @@
-<p>article works!</p>
+<div class="container mt-5">
+    <div *ngFor= "let article of articles"> 
+
+        <!--<div class="card-columns">-->
+        <div class="card text-center mt-3">
+            <div class="card-body">
+                <h5 class="card-title">{{article.description}}</h5>              
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                    Continue
+                </button>
+            </div>
+        </div>        
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title " id="exampleModalLabel">{{article.description}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{article.createdDate.toString().substr(0,10)}}
+                        <br>
+                        {{article.content}}
+                    </div>
+                    <!-- 
+                        <div class="modal-footer">            
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>          
+                        </div>
+                    -->        
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
