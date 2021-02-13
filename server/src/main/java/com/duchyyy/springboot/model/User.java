@@ -15,7 +15,7 @@ public class User implements Serializable {
 
     private String username;
     private String password;
-    private byte active;
+    private boolean active;
     private String role;
 
 
@@ -63,11 +63,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public byte getActive() {
+    public boolean isActive() {
         return active;
     }
 
-    public void setActive(byte active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 
@@ -89,5 +89,4 @@ public class User implements Serializable {
                 ", role='" + role + '\'' +
                 '}';
     }
-
 }

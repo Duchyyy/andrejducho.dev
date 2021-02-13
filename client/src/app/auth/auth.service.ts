@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
-import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,35 +9,45 @@ import { environment } from 'src/environments/environment';
 
 export class AuthService { 
   private apiServerUrl = environment.apiBaseServerUrl; 
+  SESSION_KEY = 'auth_user'
 
+	username: string = '';
+	password: string = '';
 
-  constructor(private http: HttpClient,
-            public router: Router) { }
+	constructor(private http: HttpClient) {}
 
+	authenticate(username: string, password: string) {
+		return this.http.get(`${this.apiServerUrl}/auth`, { 
+			headers: { authorization: this.createBasicAuthToken(username, password) }}).pipe(map((res) => {
+				this.username = username;
+				this.password = password;				
+				this.registerInSession(username, password);
+		}));
+	}
 
-  public generateToken(request:any) {
-    return this.http.post<string>(`${this.apiServerUrl}/login`, request, {  responseType: 'text' as 'json' });
-  }
+	createBasicAuthToken(username: string, password: string) {
+		return 'Basic ' + window.btoa(username + ":" + password)
+	}
+	
+	registerInSession(username: string, password: string) {
+		sessionStorage.setItem(this.SESSION_KEY, username)
+	}
 
+	logout() {
+		sessionStorage.removeItem(this.SESSION_KEY);
+		this.username = '';
+		this.password = '';
+	}
 
-  public welcome(token:string) {
-    let tokenStr = 'Bearer ' + token;
-    localStorage.setItem('Authorization', tokenStr);
-    const headers = new HttpHeaders().set('Authorization', tokenStr);
-    return this.http.get<string>(`${this.apiServerUrl}`, {headers, responseType: 'text' as 'json' });
-  }
+	isUserLoggedin() {
+		let user = sessionStorage.getItem(this.SESSION_KEY)
+		if (user === null) return false
+		return true
+	}
 
-  
-  get isLoggedIn(): boolean {
-    let authToken = localStorage.getItem('Authorization');
-    return (authToken !== null) ? true : false;
-  }
-
-  doLogout() {
-    let removeToken = localStorage.removeItem('Authorization');
-    if (removeToken == null) {
-      this.router.navigate(['about']);
-    }
-
-  }
+	getLoggedinUser() {
+		let user = sessionStorage.getItem(this.SESSION_KEY)
+		if (user === null) return ''
+		return user
+	}
 }

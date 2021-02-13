@@ -1,3 +1,4 @@
+import { HttpInterceptorService } from './auth/httpInterceptor.service';
 import { AuthService } from './auth/auth.service';
 import { ProfileService } from './service/profile.service';
 import { BioEventService } from './service/bio-event.service';
@@ -41,7 +42,7 @@ import { HeaderComponent } from './header/header.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [ProjectService, UserService, ArticleService, BioEventService, ProfileService, AuthService],
+  providers: [ProjectService, UserService, ArticleService, BioEventService, ProfileService, AuthService, HttpInterceptorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

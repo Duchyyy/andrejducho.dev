@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 public class UserController {
     private final UserService userService;
 
@@ -21,24 +21,6 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
-    @GetMapping("/auth")
-    public Principal user(Principal user) {
-        return user;
-    }
-    @GetMapping("/resource")
-    public Map<String, Object> home() {
-        Map<String, Object> model = new HashMap<String, Object>();
-        model.put("id", UUID.randomUUID().toString());
-        model.put("content", "Hello World, just test");
-        return model;
-    }
-/*
-    @PostMapping("/login")
-    public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
-       return "asd";
-    }*/
-
 
     @GetMapping("/admin/account")
     public ResponseEntity<User> getUserById() {
