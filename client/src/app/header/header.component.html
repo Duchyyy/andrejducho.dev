@@ -3,7 +3,7 @@
     <ul class="navbar-nav mr-3 mt-3">   
         <li class="ml-auto ">
           <button *ngIf="!this.authService.isUserLoggedin()" type="button" class="btn btn-light btn-sm" routerLink="/login">Sign in</button>
-          <button (click)="logout()" *ngIf="this.authService.isUserLoggedin()" type="button" class="btn btn-danger">Logout</button>
+          <button *ngIf="this.authService.isUserLoggedin()" (click)="logout()"  type="button" class="btn btn-danger">Logout</button>
         </li>
     </ul>  
   

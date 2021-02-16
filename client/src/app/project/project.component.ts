@@ -1,6 +1,7 @@
+import { Project } from './../model/project.model';
+import { AuthService } from './../auth/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProjectService } from '../service/project.service';
-import { Project } from '../model/project.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -10,8 +11,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectComponent implements OnInit {
   public projects: Project[] = [];
-
-  constructor(private projectService: ProjectService) { }
+  public oneProject : Project = {} as Project;
+  
+  constructor(private projectService: ProjectService, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.getProjects();
@@ -27,6 +29,34 @@ export class ProjectComponent implements OnInit {
         alert(error.message);
       }
     );    
+  }
+
+  public getProject(id: number): void {
+    this.oneProject = this.projects[id];
+  }
+
+  public updateProject(): void {
+    this.projectService.updateProject(this.oneProject).subscribe(
+      (response: Project) => {
+        this.oneProject = response;
+        console.log(this.oneProject);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public addProject(): void {
+    this.projectService.addProject(this.oneProject).subscribe(
+      (response: Project) => {
+        this.oneProject = response;
+        console.log(this.oneProject);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
   }
 
 }
