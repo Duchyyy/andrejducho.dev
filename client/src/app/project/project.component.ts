@@ -2,7 +2,7 @@ import { Project } from './../model/project.model';
 import { AuthService } from './../auth/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProjectService } from '../service/project.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-project',
@@ -42,7 +42,7 @@ export class ProjectComponent implements OnInit {
         console.log(this.oneProject);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        alert(error.message);        
       }
     );
   }
