@@ -42,7 +42,9 @@ import { HeaderComponent } from './header/header.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [ProjectService, UserService, ArticleService, BioEventService, ProfileService, AuthService, HttpInterceptorService],
+  providers: [ProjectService, UserService, ArticleService, BioEventService, ProfileService, AuthService, {  
+    provide:HTTP_INTERCEPTORS, useClass:HttpInterceptorService, multi:true 
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

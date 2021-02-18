@@ -12,6 +12,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ProjectComponent implements OnInit {
   public projects: Project[] = [];
   public oneProject : Project = {} as Project;
+
   
   constructor(private projectService: ProjectService, public authService: AuthService) { }
 
@@ -48,6 +49,8 @@ export class ProjectComponent implements OnInit {
   }
 
   public addProject(): void {
+    let lastId: number = this.projects[this.projects.length-1].id+1;    
+    this.oneProject.id = lastId;
     this.projectService.addProject(this.oneProject).subscribe(
       (response: Project) => {
         this.oneProject = response;

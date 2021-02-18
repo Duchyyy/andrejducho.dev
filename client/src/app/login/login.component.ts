@@ -7,7 +7,9 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {username: string = '';
+export class LoginComponent implements OnInit {
+  
+username: string = '';
 password : string = '';
 
 isLoggedin = false;
