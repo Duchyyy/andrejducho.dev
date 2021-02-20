@@ -22,7 +22,7 @@
                     <th scope="col">Title</th>
                     <th scope="col">Description</th>
                     <th scope="col">URL</th>
-                    <th scope="col"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newModal">  <i class="bi bi-plus-circle"></i>  </button></th>
+                    <th scope="col"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newModal" (click)="cleanOneProject()">  <i class="bi bi-plus-circle"></i>  </button></th>
                 </tr>
             </thead>
             <tbody *ngFor="let project of projects; let i = index">                
@@ -32,15 +32,12 @@
                     <td>{{project.description}}</td>
                     <td>{{project.urlLink}}</td>
                     <td><button type="button" class="btn btn-secondary mr-1" data-toggle="modal" data-target="#updateModal" (click)="getProject(i)"> <i class="bi bi-pencil-fill"></i></button>
-                        <button type="button" class="btn btn-danger " data-toggle="modal" data-target="#deleteModal">  <i class="bi bi-trash"></i></button>    </td>
+                        <button type="button" class="btn btn-danger " data-toggle="modal" data-target="#deleteModal" (click)="getProject(i)">  <i class="bi bi-trash"></i></button>    </td>
                 </tr>
                     
             </tbody>
         </table>
     </div>
-
-    <!--(click)="logout()"
-    (click)="getProject(project.id)"-->
 
     <div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -51,26 +48,30 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+
             <div class="modal-body">
-              <form>
+              <form #addForm="ngForm">
+
                 <div class="form-group">
                   <label for="title-name" class="col-form-label">Title</label>
-                  <input type="text" class="form-control" id="title-name">
+                  <input type="text" class="form-control" id="title-name"  ngModel="{{oneProject.title}}" name="title" placeholder="">
                 </div>
                 <div class="form-group">
                   <label for="description-text" class="col-form-label">Description</label>
-                  <textarea class="form-control" id="description-text"></textarea>
+                  <textarea class="form-control" id="description-text" ngModel="{{oneProject.description}}" name="description" placeholder=""></textarea>
                 </div>
                 <div class="form-group">
                     <label for="url-text" class="col-form-label">URL</label>
-                    <textarea class="form-control" id="url-text"></textarea>
-                  </div>
+                    <textarea class="form-control" id="url-text" ngModel="{{oneProject.urlLink}}" name="urlLink" placeholder=""></textarea>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addProject(addForm.value)">Confirm</button>
+                </div>
+
               </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary"data-dismiss="modal" (click)="addProject()">Confirm</button>
-            </div>
+            </div>           
           </div>
         </div>
       </div>      
@@ -85,25 +86,32 @@
               </button>
             </div>
             <div class="modal-body">
-              <form>
+              <form #updateForm="ngForm">
+
                 <div class="form-group">
-                  <label for="title-name" class="col-form-label">Title</label>
-                  <input type="text" class="form-control" id="title-name" value="{{this.oneProject.title}}">
+                  <div >
+                    <label for="id-name" class="col-form-label">ID</label>  
+                    <input class="form-control" type="text" ngModel="{{this.oneProject.id}}" name="id"  placeholder="{{this.oneProject.id}}" readonly>
+                  </div>
+                  <label for="title-name" class="col-form-label">Title</label>                
+                  <input type="text" class="form-control" id="title-name" ngModel="{{this.oneProject.title}}" name="title">
                 </div>
                 <div class="form-group">
                   <label for="description-text" class="col-form-label">Description</label>
-                  <textarea class="form-control" id="description-text" value="{{this.oneProject.description}}"></textarea>
+                  <textarea class="form-control" id="description-text" ngModel="{{this.oneProject.description}}" name="description"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="url-text" class="col-form-label">URL</label>
-                    <textarea class="form-control" id="url-text" value="{{this.oneProject.urlLink}}"></textarea>
+                    <textarea class="form-control" id="url-text" ngModel="{{this.oneProject.urlLink}}" name="urlLink"></textarea>
                   </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateProject(updateForm.value)">Confirm</button>
+                  </div>
+
               </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateProject()">Confirm</button>
-            </div>
+            </div>            
           </div>
         </div>
       </div>
@@ -118,17 +126,15 @@
               </button>
             </div>
             <div class="modal-body">
-              Are you sure to delete this project?
+              Are you sure to delete this project? {{oneProject.title}}
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteProject(oneProject.id)">Delete</button>
             </div>
           </div>
         </div>
       </div>
-
-
 </div>
 
 

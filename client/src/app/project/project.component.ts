@@ -1,3 +1,4 @@
+import { NgForm, FormsModule } from '@angular/forms';
 import { Project } from './../model/project.model';
 import { AuthService } from './../auth/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -12,7 +13,6 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ProjectComponent implements OnInit {
   public projects: Project[] = [];
   public oneProject : Project = {} as Project;
-
   
   constructor(private projectService: ProjectService, public authService: AuthService) { }
 
@@ -33,14 +33,16 @@ export class ProjectComponent implements OnInit {
   }
 
   public getProject(id: number): void {
+    this.getProjects();
     this.oneProject = this.projects[id];
   }
 
-  public updateProject(): void {
+  public updateProject(project: Project): void {
+    this.oneProject = project;
     this.projectService.updateProject(this.oneProject).subscribe(
       (response: Project) => {
-        this.oneProject = response;
-        console.log(this.oneProject);
+        console.log(response);
+        this.getProjects();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);        
@@ -48,18 +50,38 @@ export class ProjectComponent implements OnInit {
     );
   }
 
-  public addProject(): void {
+  public addProject(project: Project): void {
+    this.oneProject = project;
     let lastId: number = this.projects[this.projects.length-1].id+1;    
     this.oneProject.id = lastId;
     this.projectService.addProject(this.oneProject).subscribe(
       (response: Project) => {
-        this.oneProject = response;
-        console.log(this.oneProject);
+        console.log(response);
+        this.getProjects();        
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );    
+  }
+  
+  public deleteProject(projectId: number): void {
+    this.projectService.deleteProject(projectId).subscribe(
+      (response: void) => {
+        console.log(response);
+        this.getProjects();        
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
+  }
+
+  public cleanOneProject(): void {
+    this.oneProject.id = -1;
+    this.oneProject.title = '';
+    this.oneProject.description = '';
+    this.oneProject.urlLink = '';
   }
 
 }
