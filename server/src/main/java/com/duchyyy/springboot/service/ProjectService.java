@@ -2,9 +2,9 @@ package com.duchyyy.springboot.service;
 
 import com.duchyyy.springboot.model.Project;
 import com.duchyyy.springboot.repository.ProjectRepository;
+import com.duchyyy.springboot.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -12,12 +12,15 @@ import java.util.Optional;
 @Transactional
 public class ProjectService {
     private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
 
-    public ProjectService(ProjectRepository projectRepository) {
+    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository) {
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
     }
 
     public Project addProject(Project project) {
+        project.setUser(userRepository.getOne(1));
         return projectRepository.save(project);
     }
 
@@ -29,6 +32,7 @@ public class ProjectService {
     }
 
     public Project updateProject(Project project) {
+        project.setUser(userRepository.getOne(1));
         return projectRepository.save(project);
     }
 

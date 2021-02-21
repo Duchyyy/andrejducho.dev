@@ -18,9 +18,8 @@ import java.security.Principal;
 import java.util.*;
 
 
-
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@CrossOrigin
 public class HomeController {
     private final ProfileService profileService;
     private final BioEventService bioEventService;

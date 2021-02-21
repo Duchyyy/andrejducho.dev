@@ -2,23 +2,25 @@ package com.duchyyy.springboot.service;
 
 import com.duchyyy.springboot.model.BioEvent;
 import com.duchyyy.springboot.repository.BioEventRepository;
+import com.duchyyy.springboot.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
 public class BioEventService {
-
     private final BioEventRepository bioEventRepository;
+    private final UserRepository userRepository;
 
-    public BioEventService(BioEventRepository bioEventRepository) {
+    public BioEventService(BioEventRepository bioEventRepository, UserRepository userRepository) {
         this.bioEventRepository = bioEventRepository;
+        this.userRepository = userRepository;
     }
 
     public BioEvent addBioEvent(BioEvent bioEvent) {
+        bioEvent.setUser(userRepository.getOne(1));
         return bioEventRepository.save(bioEvent);
     }
     public Optional<BioEvent> findBioEventById(Integer id) {
@@ -29,6 +31,7 @@ public class BioEventService {
     }
 
     public BioEvent updateBioEvent(BioEvent bioEvent) {
+        bioEvent.setUser(userRepository.getOne(1));
         return  bioEventRepository.save(bioEvent);
     }
     public void deleteBioEvent(Integer id){
