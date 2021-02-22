@@ -1,38 +1,173 @@
-<div class="container mt-5">
-    <div *ngFor= "let article of articles"> 
+<div *ngIf="!this.authService.isUserLoggedin()">
+    <div class="container mt-5">
+        <div *ngFor= "let article of articles"> 
 
-        <!--<div class="card-columns">-->
-        <div class="card text-center mt-3">
-            <div class="card-body">
-                <h5 class="card-title">{{article.description}}</h5>              
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
-                    Continue
-                </button>
-            </div>
-        </div>        
+            <!--<div class="card-columns">-->
+            <div class="card text-center mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{article.description}}</h5>              
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                        Continue
+                    </button>
+                </div>
+            </div>        
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title " id="exampleModalLabel">{{article.description}}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        {{article.createdDate.toString().substr(0,10)}}
-                        <br>
-                        {{article.content}}
-                    </div>
-                    <!-- 
-                        <div class="modal-footer">            
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>          
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title " id="exampleModalLabel">{{article.description}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                    -->        
+                        <div class="modal-body">
+                            {{article.createdDate.toString().substr(0,10)}}
+                            <br>
+                            {{article.content}}
+                        </div>       
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div *ngIf="this.authService.isUserLoggedin()">
+    <div class="container text-center mt-5">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Content</th>
+                    <th scope="col"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newModal" (click)="cleanOneArticle()">  <i class="bi bi-plus-circle"></i>  </button></th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let article of articles; let i = index">                
+                <tr>
+                    <th scope="row" class="text-truncate" style="max-width: 150px;">{{article.id}}</th>
+                    <td class="text-truncate" style="max-width: 150px;">{{article.title}}</td>
+                    <td class="text-truncate" style="max-width: 150px;">{{article.description}}</td>
+                    <td class="text-truncate" style="max-width: 150px;">{{article.createdDate.toString().substr(0,10)}}</td>
+                    <td class="text-truncate" style="max-width: 150px;">{{article.content}}</td>
+                    <td class="text-truncate" style="max-width: 150px;"><button type="button" class="btn btn-secondary mr-1" data-toggle="modal" data-target="#updateModal" (click)="getArticle(i)"> <i class="bi bi-pencil-fill"></i></button>
+                        <button type="button" class="btn btn-danger " data-toggle="modal" data-target="#deleteModal" (click)="getArticle(i)">  <i class="bi bi-trash"></i></button>    </td>
+                </tr>
+                    
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="newModalLabel">New article</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <form #addForm="ngForm">
+
+                <div class="form-group">
+                  <label for="title-name" class="col-form-label">Title</label>
+                  <input type="text" class="form-control" id="title-name"  ngModel="{{oneArticle.title}}" name="title" placeholder="">
+                </div>
+                <div class="form-group">
+                  <label for="description-text" class="col-form-label">Description</label>
+                  <textarea class="form-control" id="description-text" ngModel="{{oneArticle.description}}" name="description" placeholder=""></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="createdDate-text" class="col-form-label">Created date</label>
+                    <textarea class="form-control" id="createdDate-text" ngModel="{{oneArticle.createdDate}}" name="createdDate" placeholder="2020-12-31"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="content-text" class="col-form-label">Content</label>
+                    <textarea class="form-control" id="content-text" ngModel="{{oneArticle.content}}" name="content" placeholder=""></textarea>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addArticle(addForm.value)">Confirm</button>
+                </div>
+
+              </form>
+            </div>           
+          </div>
+        </div>
+      </div>      
+
+      <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="updateModalLabel">Update article</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form #updateForm="ngForm">
+
+                <div class="form-group">                  
+                    <label for="id-name" class="col-form-label">ID</label>  
+                    <input class="form-control" type="text" ngModel="{{this.oneArticle.id}}" name="id"  placeholder="{{this.oneArticle.id}}" readonly>                  
+                </div>
+                <div class="form-group">
+                    <label for="title-name" class="col-form-label">Title</label>
+                    <input type="text" class="form-control" id="title-name"  ngModel="{{oneArticle.title}}" name="title" placeholder="">
+                  </div>
+                  <div class="form-group">
+                    <label for="description-text" class="col-form-label">Description</label>
+                    <textarea class="form-control" id="description-text" ngModel="{{oneArticle.description}}" name="description" placeholder=""></textarea>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="created-date-text" class="col-form-label">Created date</label>
+                      <textarea class="form-control" id="created-date-tex" ngModel="{{oneArticle.createdDate}}" name="createdDate" placeholder=""></textarea>
+                  </div>
+  
+                  <div class="form-group">
+                      <label for="url-text" class="col-form-label">Content</label>
+                      <textarea class="form-control" id="url-text" ngModel="{{oneArticle.content}}" name="content" placeholder=""></textarea>
+                  </div>
+  
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateArticle(updateForm.value)">Confirm</button>
+                  </div>
+
+              </form>
+            </div>            
+          </div>
+        </div>
+      </div>
+        
+      <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Delete article</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure to delete this article? {{oneArticle.title}}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteArticle(oneArticle.id)">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+

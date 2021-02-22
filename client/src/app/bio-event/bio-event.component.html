@@ -1,18 +1,134 @@
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-12">            
-            <div class="card-body">                  
-                <div id="content">
-                    <ul class="timeline">
-                        <div *ngFor= "let bioEvent of bioEvents">
-                            <li class="event" data-date="">
-                                <h3>{{bioEvent.eventDate.toString().substr(0,7)}}</h3>
-                                <p>{{bioEvent.event}}</p>
-                            </li>
-                        </div>                                                     
-                    </ul>
-                </div>
-            </div>            
+<div *ngIf="!this.authService.isUserLoggedin()">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">            
+                <div class="card-body">                  
+                    <div id="content">
+                        <ul class="timeline">
+                            <div *ngFor= "let bioEvent of bioEvents">
+                                <li class="event" data-date="">
+                                    <h3>{{bioEvent.eventDate.toString().substr(0,7)}}</h3>
+                                    <p>{{bioEvent.event}}</p>
+                                </li>
+                            </div>                                                     
+                        </ul>
+                    </div>
+                </div>            
+            </div>
         </div>
     </div>
+</div>
+
+<div *ngIf="this.authService.isUserLoggedin()">
+    <div class="container text-center mt-5">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Event</th>
+                    <th scope="col">EventDate</th>
+                    <th scope="col"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newModal" (click)="cleanOneBioEvent()">  <i class="bi bi-plus-circle"></i>  </button></th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let bioEvent of bioEvents; let i = index">                
+                <tr>
+                    <th scope="row" class="text-truncate" style="max-width: 150px;">{{bioEvent.id}}</th>
+                    <td class="text-truncate" style="max-width: 150px;">{{bioEvent.event}}</td>
+                    <td class="text-truncate" style="max-width: 150px;">{{bioEvent.eventDate.toString().substr(0,10)}}</td>
+                    <td class="text-truncate" style="max-width: 150px;"><button type="button" class="btn btn-secondary mr-1" data-toggle="modal" data-target="#updateModal" (click)="getBioEvent(i)"> <i class="bi bi-pencil-fill"></i></button>
+                        <button type="button" class="btn btn-danger " data-toggle="modal" data-target="#deleteModal" (click)="getBioEvent(i)">  <i class="bi bi-trash"></i></button>    </td>
+                </tr>
+                    
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="newModalLabel">New event</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <form #addForm="ngForm">
+
+                <div class="form-group">
+                  <label for="event-name" class="col-form-label">Event</label>
+                  <input type="text" class="form-control" id="event-name"  ngModel="{{oneBioEvent.event}}" name="event" placeholder="">
+                </div>              
+                
+                <div class="form-group">
+                    <label for="eventDate-text" class="col-form-label">Event date</label>
+                    <textarea class="form-control" id="eventDate-text" ngModel="{{oneBioEvent.eventDate}}" name="eventDate" placeholder="2020-12-31"></textarea>
+                </div>                
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addBioEvent(addForm.value)">Confirm</button>
+                </div>
+
+              </form>
+            </div>           
+          </div>
+        </div>
+      </div>      
+
+      <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="updateModalLabel">Update event</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form #updateForm="ngForm">
+
+                <div class="form-group">                  
+                  <label for="id-name" class="col-form-label">ID</label>  
+                  <input class="form-control" type="text" ngModel="{{this.oneBioEvent.id}}" name="id"  placeholder="{{this.oneBioEvent.id}}" readonly>                  
+                </div>
+                  <div class="form-group">
+                    <label for="event-name" class="col-form-label">Event</label>
+                    <input type="text" class="form-control" id="event-name"  ngModel="{{oneBioEvent.event}}" name="event" placeholder="">
+                  </div>              
+                  
+                  <div class="form-group">
+                      <label for="eventDate-text" class="col-form-label">Event date</label>
+                      <textarea class="form-control" id="eventDate-text" ngModel="{{oneBioEvent.eventDate}}" name="eventDate" placeholder="2020-12-31"></textarea>
+                  </div>                
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateBioEvent(updateForm.value)">Confirm</button>
+                  </div>
+
+              </form>
+            </div>            
+          </div>
+        </div>
+      </div>
+        
+      <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Delete article</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure to delete this event? {{oneBioEvent.event}}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteBioEvent(oneBioEvent.id)">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
 </div>

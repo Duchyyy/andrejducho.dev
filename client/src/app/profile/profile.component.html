@@ -1,7 +1,107 @@
-<div class="jumbotron text-center ">
-    <h4 class="display-9">Hi, I am Andrej a developer from Slovakia. </h4>
-        <p class="lead">{{profile.profile}}</p>
-    <hr class="my-4">
-    <h6 class="display-9">Working with </h6>
-        <p><strong>{{profile.technologies}}</strong></p>    
-  </div>
+<div *ngIf="!this.authService.isUserLoggedin()">
+    <div class="jumbotron text-center ">
+        <h4 class="display-9">Hi, I am Andrej a developer from Slovakia. </h4>
+            <p class="lead">{{profile.profile}}</p>
+        <hr class="my-4">
+        <h6 class="display-9">Working with </h6>
+            <p><strong>{{profile.technologies}}</strong></p>    
+    </div>
+</div>
+
+<div *ngIf="this.authService.isUserLoggedin()">
+    <div class="container text-center mt-5">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Profile</th>
+                    <th scope="col">Technologies</th>
+<!--
+                    <div *ngIf="this.profile.profile == '' ">
+                        <th scope="col"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newModal">  <i class="bi bi-plus-circle"></i>  </button></th>
+                    </div>
+-->
+                </tr>
+            </thead>
+            <tbody>                
+                <tr>
+                    <th scope="row" class="text-truncate" style="max-width: 150px;">{{profile.id}}</th>
+                    <td class="text-truncate" style="max-width: 150px;">{{profile.profile}}</td>
+                    <td class="text-truncate" style="max-width: 150px;">{{profile.technologies}}</td>
+                    <td class="text-truncate" style="max-width: 150px;"><button type="button" class="btn btn-secondary mr-1" data-toggle="modal" data-target="#updateModal" (click)="getProfile()"> <i class="bi bi-pencil-fill"></i></button></td>
+                </tr>
+                    
+            </tbody>
+        </table>
+    </div>
+<!--
+    <div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="newModalLabel">New profile</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <form #addForm="ngForm">
+
+                <div class="form-group">
+                  <label for="profile-name" class="col-form-label">Profile</label>
+                  <input type="text" class="form-control" id="profile-name"  ngModel="{{profile.profile}}" name="profile" placeholder="">
+                </div>
+                <div class="form-group">
+                  <label for="technologies-text" class="col-form-label">Technologies</label>
+                  <textarea class="form-control" id="technologies-text" ngModel="{{profile.technologies}}" name="technologies" placeholder=""></textarea>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addProfile(addForm.value)">Confirm</button>
+                </div>
+
+              </form>
+            </div>           
+          </div>
+        </div>
+      </div>      
+    -->
+      <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="updateModalLabel">Update article</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form #updateForm="ngForm">
+                <div class="form-group">                  
+                  <label for="id-name" class="col-form-label">ID</label>  
+                  <input class="form-control" type="text" ngModel="{{this.profile.id}}" name="id"  placeholder="{{this.profile.id}}" readonly>                  
+                </div>
+
+                <div class="form-group">
+                    <label for="profile-name" class="col-form-label">Profile</label>
+                    <input type="text" class="form-control" id="profile-name"  ngModel="{{profile.profile}}" name="profile" placeholder="">
+                  </div>
+                  <div class="form-group">
+                    <label for="technologies-text" class="col-form-label">Technologies</label>
+                    <textarea class="form-control" id="technologies-text" ngModel="{{profile.technologies}}" name="technologies" placeholder=""></textarea>
+                  </div>
+  
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateProfile(updateForm.value)">Confirm</button>
+                  </div>
+
+              </form>
+            </div>            
+          </div>
+        </div>
+      </div>     
+      
+</div>

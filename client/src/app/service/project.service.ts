@@ -12,7 +12,6 @@ export class ProjectService {
 
   constructor(private http: HttpClient) { }
 
-
   public getProjects(): Observable<Project[]> {
     return this.http.get<Project[]>(`${this.apiServerUrl}/projects`);
   }

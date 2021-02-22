@@ -27,11 +27,11 @@
             </thead>
             <tbody *ngFor="let project of projects; let i = index">                
                 <tr>
-                    <th scope="row" >{{project.id}}</th>
-                    <td>{{project.title}}</td>
-                    <td>{{project.description}}</td>
-                    <td>{{project.urlLink}}</td>
-                    <td><button type="button" class="btn btn-secondary mr-1" data-toggle="modal" data-target="#updateModal" (click)="getProject(i)"> <i class="bi bi-pencil-fill"></i></button>
+                    <th scope="row" class="text-truncate" style="max-width: 150px;" >{{project.id}}</th>
+                    <td class="text-truncate" style="max-width: 150px;">{{project.title}}</td>
+                    <td class="text-truncate" style="max-width: 150px;">{{project.description}}</td>
+                    <td class="text-truncate" style="max-width: 150px;">{{project.urlLink}}</td>
+                    <td class="text-truncate" style="max-width: 150px;"><button type="button" class="btn btn-secondary mr-1" data-toggle="modal" data-target="#updateModal" (click)="getProject(i)"> <i class="bi bi-pencil-fill"></i></button>
                         <button type="button" class="btn btn-danger " data-toggle="modal" data-target="#deleteModal" (click)="getProject(i)">  <i class="bi bi-trash"></i></button>    </td>
                 </tr>
                     
@@ -88,11 +88,11 @@
             <div class="modal-body">
               <form #updateForm="ngForm">
 
-                <div class="form-group">
-                  <div >
+                <div class="form-group">                  
                     <label for="id-name" class="col-form-label">ID</label>  
-                    <input class="form-control" type="text" ngModel="{{this.oneProject.id}}" name="id"  placeholder="{{this.oneProject.id}}" readonly>
-                  </div>
+                    <input class="form-control" type="text" ngModel="{{this.oneProject.id}}" name="id"  placeholder="{{this.oneProject.id}}" readonly>                  
+                </div>
+                <div class="form-group">   
                   <label for="title-name" class="col-form-label">Title</label>                
                   <input type="text" class="form-control" id="title-name" ngModel="{{this.oneProject.title}}" name="title">
                 </div>
