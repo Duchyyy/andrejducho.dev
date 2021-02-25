@@ -1,13 +1,7 @@
 package com.duchyyy.springboot.model;
 
-
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 public class User implements Serializable {
@@ -19,7 +13,6 @@ public class User implements Serializable {
     private String password;
     private boolean active;
     private String role;
-
 
 /*
     @OneToOne(mappedBy = "user", fetch = FetchType.EAGER)

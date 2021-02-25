@@ -5,12 +5,7 @@ import com.duchyyy.springboot.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController

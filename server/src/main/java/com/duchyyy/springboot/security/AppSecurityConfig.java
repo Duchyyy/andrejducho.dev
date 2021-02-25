@@ -30,8 +30,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/about","/experience", "/articles/*", "/articles", "/projects/*" ,"/projects").permitAll()
                 .anyRequest()
                 .authenticated().and().httpBasic();
-
-
     }
 
     @Bean

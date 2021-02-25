@@ -1,12 +1,10 @@
 package com.duchyyy.springboot.controller;
 
 import com.duchyyy.springboot.model.Article;
-import com.duchyyy.springboot.model.Project;
 import com.duchyyy.springboot.service.ArticleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 

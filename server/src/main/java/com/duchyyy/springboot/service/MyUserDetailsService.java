@@ -7,10 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Optional;
-
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
@@ -20,11 +17,10 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional <User> user = userRepository.findByUsername(username);// optional je ze to nemusi mat hodnotu
+        Optional <User> user = userRepository.findByUsername(username);
 
         user.orElseThrow(() -> new UsernameNotFoundException("Not found : " + username));
 
-        // namapuje to parametre usera do myuserdetais a ulozim si to do userDetails
         UserDetails userDetails = user.map(user1 -> new MyUserDetails(user1)).get();
 
         System.out.println(userDetails.getPassword());

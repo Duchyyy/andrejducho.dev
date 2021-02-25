@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.security.Principal;
 import java.util.*;
 
@@ -36,11 +35,6 @@ public class HomeController {
     @GetMapping("/auth")
     public Principal user(Principal user) {
         return user;
-    }
-
-    @GetMapping("/admin")
-    public String admin (){
-        return "Welcome admin";
     }
 
     @GetMapping("/about")
